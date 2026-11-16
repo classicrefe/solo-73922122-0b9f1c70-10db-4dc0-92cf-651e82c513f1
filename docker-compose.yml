@@ -1,0 +1,23 @@
+# 双实例部署：app1/app2 共享同一命名卷（原件、处理包、SQLite 目录库），
+# 演示并发上传、跨实例复用与跨批引用。宿主机分别通过 8001/8002 访问。
+services:
+  app1:
+    build: .
+    environment:
+      - DEID_DATA_DIR=/data
+    volumes:
+      - deid-data:/data
+    ports:
+      - "8001:8000"
+
+  app2:
+    build: .
+    environment:
+      - DEID_DATA_DIR=/data
+    volumes:
+      - deid-data:/data
+    ports:
+      - "8002:8000"
+
+volumes:
+  deid-data:
